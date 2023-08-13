@@ -26,10 +26,10 @@ function randomHarmonicMinor() {
 }
 
 function preload() {
-  sound1 = loadSound("Falsetto - Shabara Samples 05.wav");
-  sound2 = loadSound("RullyShabaraSampleV02.mp3");
-  sound3 = loadSound("New_Project (26).mp3");
-  sound4 = loadSound("New_Project (29).mp3");
+  sound1 = loadSound("RullyShabaraSampleF26.mp3");
+  sound2 = loadSound("RullyShabaraSampleF4.mp3");
+  sound3 = loadSound("RullyShabaraSampleF5.wav");
+  sound4 = loadSound("RullyShabaraSampleT29.mp3");
 }
 let noiseOffset1, noiseOffset2, noiseOffset3, noiseOffset4;
 
