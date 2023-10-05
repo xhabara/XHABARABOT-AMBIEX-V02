@@ -7,6 +7,11 @@ let panSlider1, panSlider2, panSlider3, panSlider4;
 let volumeSlider1, volumeSlider2, volumeSlider3, volumeSlider4;
 let isPlaying = false;
 
+let saveButton;  
+let mainRecorder;  
+let mainRecording;  
+let isMainRecording = false;  
+
 function preload() {
   sound1 = loadSound("RullyShabaraSampleF4.wav");
   sound2 = loadSound("RullyShabaraSampleF5.wav");
@@ -29,6 +34,20 @@ function setup() {
   delay3.process(sound3, 0.12, 0.7, 2300);
   delay4 = new p5.Delay();
   delay4.process(sound4, 0.12, 0.7, 2300);
+  
+  // Initialize the main recorder and set its input to the master output
+mainRecorder = new p5.SoundRecorder();
+mainRecorder.setInput();
+
+// Create a new p5.SoundFile for the recording
+mainRecording = new p5.SoundFile();
+
+// Create the save button
+saveButton = createButton("Start Recording");
+  saveButton.class('button');
+saveButton.position(150, 380);  
+saveButton.mousePressed(toggleMainRecording);
+
 
   let startButton = createButton("Start/Stop");
   startButton.class('button');
@@ -143,7 +162,8 @@ function setup() {
   
 
   autonomousButton = createButton("Xhabarabot Takeover");
-  autonomousButton.position(130, 350);
+  autonomousButton.class('button');
+  autonomousButton.position(135, 350);
   autonomousButton.mousePressed(() => {
     autonomousMode = !autonomousMode;
     autonomousButton.html(autonomousMode ? "Stop Xhabarabot Mode" : "Xhabarabot Takeover");
@@ -221,3 +241,20 @@ function draw() {
 
   adjustSound(); // Call this function to adjust the sound whether in autonomous mode or manual mode
 }
+
+function toggleMainRecording() {
+  if (!isMainRecording) {
+    // Start main recording
+    mainRecorder.record(mainRecording);
+    isMainRecording = true;
+    saveButton.html("Stop and Save");
+  } else {
+    // Stop main recording and save the file
+    mainRecorder.stop();
+    saveSound(mainRecording, 'XhabarabotAmbiexRecording.wav');
+    isMainRecording = false;
+    saveButton.html("Start Recording");
+    mainRecording = new p5.SoundFile(); // Reset the recording
+  }
+}
+
